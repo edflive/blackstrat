@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="À propos"
+  description="À propos de Blackstrat — revue éditoriale indépendante."
+>
+  <div class="article-page">
+    <div class="container container--narrow">
+
+      <header class="article-header">
+        <div class="article-header__tags">
+          <span class="tag tag--article">À propos</span>
+        </div>
+        <h1 class="article-header__title">Sur Blackstrat</h1>
+      </header>
+
+      <div class="prose">
+        <p>
+          <strong>Blackstrat</strong> est une revue éditoriale indépendante consacrée
+          aux essais longs, aux réflexions de fond et aux chroniques sur la culture
+          contemporaine, le langage, l'espace urbain et la vie des idées.
+        </p>
+
+        <p>
+          Le titre évoque la Fender Stratocaster noire — instrument de précision,
+          de sobriété et de résonance. Nous cherchons à écrire avec cette même
+          économie : peu de notes, mais chacune à sa place.
+        </p>
+
+        <h2>Notre ligne éditoriale</h2>
+
+        <p>
+          Nous croyons que certaines questions méritent plus que quelques
+          paragraphes. Que la nuance n'est pas un luxe mais une nécessité.
+          Que le temps long de la lecture est, en soi, une manière de résister
+          à la précipitation du monde.
+        </p>
+
+        <p>
+          Nos textes sont écrits en français, pour un lectorat curieux,
+          attentif, et disposé à s'arrêter un instant.
+        </p>
+
+        <h2>Contact</h2>
+
+        <p>
+          Pour toute proposition de contribution ou question éditoriale,
+          écrivez-nous à <a href="mailto:contact@blackstrat.fr">contact@blackstrat.fr</a>.
+        </p>
+      </div>
+
+      <footer class="article-footer">
+        <a href="/" class="back-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="19" y1="12" x2="5" y2="12"/>
+            <polyline points="12 19 5 12 12 5"/>
+          </svg>
+          Retour à l'accueil
+        </a>
+      </footer>
+
+    </div>
+  </div>
+</BaseLayout>

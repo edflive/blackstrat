@@ -1,0 +1,130 @@
+---
+import '../styles/global.css';
+
+export interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title,
+  description = 'Revue éditoriale — essais, réflexions, chroniques.',
+  ogImage,
+} = Astro.props;
+
+const siteName = 'Blackstrat';
+const fullTitle = title === siteName ? title : `${title} — ${siteName}`;
+---
+
+<!doctype html>
+<html lang="fr" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{fullTitle}</title>
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Fonts preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Global styles (imported via Astro, not a static href) -->
+
+    <!-- Inline theme init — runs before paint to avoid flash -->
+    <script is:inline>
+      (function () {
+        const stored = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const theme = stored || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
+  </head>
+
+  <body>
+    <!-- ===== Site Header ===== -->
+    <header class="site-header">
+      <div class="container">
+        <div class="site-header__inner">
+          <a href="/" class="site-logo">Blackstrat</a>
+
+          <nav class="site-nav" aria-label="Navigation principale">
+            <a href="/" class="show-mobile">Accueil</a>
+            <a href="/#articles">Articles</a>
+            <a href="/a-propos">À propos</a>
+          </nav>
+
+          <button
+            class="theme-toggle"
+            id="theme-toggle"
+            aria-label="Basculer le mode sombre"
+            title="Basculer le mode sombre / clair"
+          >
+            <!-- Sun icon — shown in dark mode -->
+            <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="5"/>
+              <line x1="12" y1="1" x2="12" y2="3"/>
+              <line x1="12" y1="21" x2="12" y2="23"/>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+              <line x1="1" y1="12" x2="3" y2="12"/>
+              <line x1="21" y1="12" x2="23" y2="12"/>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+            <!-- Moon icon — shown in light mode -->
+            <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ===== Main Content ===== -->
+    <main id="main-content">
+      <slot />
+    </main>
+
+    <!-- ===== Site Footer ===== -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="site-footer__inner">
+          <p>
+            &copy; {new Date().getFullYear()} <strong>Blackstrat</strong>
+            &mdash; Revue éditoriale indépendante.
+          </p>
+          <p>
+            <a href="/#articles">Articles</a>
+            &nbsp;&middot;&nbsp;
+            <a href="/a-propos">À propos</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Dark mode toggle script -->
+    <script>
+      const toggle = document.getElementById('theme-toggle');
+      if (toggle) {
+        toggle.addEventListener('click', () => {
+          const html = document.documentElement;
+          const current = html.getAttribute('data-theme') ?? 'light';
+          const next = current === 'dark' ? 'light' : 'dark';
+          html.setAttribute('data-theme', next);
+          localStorage.setItem('theme', next);
+        });
+      }
+    </script>
+  </body>
+</html>

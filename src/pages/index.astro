@@ -1,0 +1,94 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Fetch and sort articles by date descending
+const allArticles = await getCollection('articles');
+const articles = allArticles.sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime()
+);
+
+/**
+ * Format a Date as French compact date: "10 avril 2026"
+ */
+function formatDateFr(d: Date): string {
+  return d.toLocaleDateString('fr-FR', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+}
+---
+
+<BaseLayout
+  title="Blackstrat"
+  description="Revue éditoriale — essais, réflexions, chroniques sur la culture, la modernité et le monde contemporain."
+>
+  <!-- ===== Hero ===== -->
+  <section class="home-hero">
+    <div class="container">
+      <p class="home-hero__eyebrow">Revue éditoriale</p>
+      <h1 class="home-hero__title">
+        Penser<br /><em>en profondeur.</em>
+      </h1>
+      <p class="home-hero__subtitle">
+        Essais, réflexions et chroniques sur la culture, le langage,
+        l'espace et la modernité. Un regard lent sur un monde pressé.
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== Article List ===== -->
+  <section id="articles" style="padding-bottom: var(--space-24);">
+    <div class="container">
+      <div class="article-list-header">
+        <h2>Tous les articles</h2>
+        <span style="font-family: var(--font-ui); font-size: var(--text-xs); color: var(--color-text-faint);">
+          {articles.length} {articles.length === 1 ? 'article' : 'articles'}
+        </span>
+      </div>
+
+      <ul class="article-list">
+        {articles.map((article) => (
+          <li class="article-card">
+            <div class="article-card__meta">
+              <time
+                class="article-card__date"
+                datetime={article.data.date.toISOString()}
+              >
+                {formatDateFr(article.data.date)}
+              </time>
+              {article.data.tags && article.data.tags.length > 0 && (
+                <div class="article-card__tags" aria-label="Tags">
+                  {article.data.tags.map((tag) => (
+                    <span class="tag">{tag}</span>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <h3 class="article-card__title">
+              <a href={`/articles/${article.slug}`}>
+                {article.data.title}
+              </a>
+            </h3>
+
+            <p class="article-card__excerpt">{article.data.excerpt}</p>
+
+            <a
+              href={`/articles/${article.slug}`}
+              class="article-card__link"
+              aria-label={`Lire : ${article.data.title}`}
+            >
+              Lire
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <line x1="5" y1="12" x2="19" y2="12"/>
+                <polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
