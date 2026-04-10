@@ -32,7 +32,7 @@ const fullTitle = title === siteName ? title : `${title} — ${siteName}`;
     {ogImage && <meta property="og:image" content={ogImage} />}
 
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
 
     <!-- Fonts preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -56,12 +56,12 @@ const fullTitle = title === siteName ? title : `${title} — ${siteName}`;
     <header class="site-header">
       <div class="container">
         <div class="site-header__inner">
-          <a href="/" class="site-logo">Blackstrat</a>
+          <a href={import.meta.env.BASE_URL} class="site-logo">Blackstrat</a>
 
           <nav class="site-nav" aria-label="Navigation principale">
-            <a href="/" class="show-mobile">Accueil</a>
-            <a href="/#articles">Articles</a>
-            <a href="/a-propos">À propos</a>
+            <a href={import.meta.env.BASE_URL} class="show-mobile">Accueil</a>
+            <a href={`${import.meta.env.BASE_URL}#articles`}>Articles</a>
+            <a href={`${import.meta.env.BASE_URL}a-propos`}>À propos</a>
           </nav>
 
           <button
@@ -105,9 +105,9 @@ const fullTitle = title === siteName ? title : `${title} — ${siteName}`;
             &mdash; Revue éditoriale indépendante.
           </p>
           <p>
-            <a href="/#articles">Articles</a>
+            <a href={`${import.meta.env.BASE_URL}#articles`}>Articles</a>
             &nbsp;&middot;&nbsp;
-            <a href="/a-propos">À propos</a>
+            <a href={`${import.meta.env.BASE_URL}a-propos`}>À propos</a>
           </p>
         </div>
       </div>

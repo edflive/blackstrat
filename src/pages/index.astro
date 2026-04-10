@@ -68,7 +68,7 @@ function formatDateFr(d: Date): string {
             </div>
 
             <h3 class="article-card__title">
-              <a href={`/articles/${article.slug}`}>
+              <a href={`${import.meta.env.BASE_URL}articles/${article.slug}`}>
                 {article.data.title}
               </a>
             </h3>
@@ -76,7 +76,7 @@ function formatDateFr(d: Date): string {
             <p class="article-card__excerpt">{article.data.excerpt}</p>
 
             <a
-              href={`/articles/${article.slug}`}
+              href={`${import.meta.env.BASE_URL}articles/${article.slug}`}
               class="article-card__link"
               aria-label={`Lire : ${article.data.title}`}
             >
